@@ -1,5 +1,6 @@
-import React from 'react';
-import { categories, brands } from '../data.js';
+// src/components/Sidebar.jsx
+import React, { useContext } from 'react';
+import { ProductContext } from '../context/ProductContext';
 
 const Sidebar = ({
   selectedCategory,
@@ -8,34 +9,44 @@ const Sidebar = ({
   selectedBrand,
   setSelectedBrand,
 }) => {
+  const { products } = useContext(ProductContext);
+
+  // Derive unique brands from products
+  const uniqueBrands = [...new Set(products.map((product) => product.brand))];
+
+  // Derive models for the selected brand
+  const modelsForSelectedBrand = selectedCategory
+    ? [...new Set(products.filter((product) => product.brand === selectedCategory).map((product) => product.model))]
+    : [];
+
   return (
     <div className="w-full md:w-64 bg-gray-700 text-white p-6 rounded-lg shadow-md mb-4 md:mb-0">
       <h2 className="text-xl font-semibold mb-4 text-gray-100">Categories</h2>
       <ul>
-        {Object.keys(categories).map((category) => (
-          <li key={category} className="mb-2">
+        {uniqueBrands.map((brand) => (
+          <li key={brand} className="mb-2">
             <button
               onClick={() => {
-                setSelectedCategory(category);
+                setSelectedCategory(brand);
                 setSelectedSubcategory(null);
               }}
               className={`w-full text-left p-2 rounded-md ${
-                selectedCategory === category
+                selectedCategory === brand
                   ? 'bg-gray-600 text-gray-100'
                   : 'text-gray-200 hover:bg-gray-600 hover:text-gray-100 transition'
               }`}
             >
-              {category}
+              {brand}
             </button>
-            {selectedCategory === category && (
+            {selectedCategory === brand && (
               <ul className="ml-4 mt-2">
-                {categories[category].map((sub) => (
-                  <li key={sub}>
+                {modelsForSelectedBrand.map((model) => (
+                  <li key={model}>
                     <button
-                      onClick={() => setSelectedSubcategory(sub)}
+                      onClick={() => setSelectedSubcategory(model)}
                       className={`w-full text-left p-2 rounded-md text-gray-300 hover:bg-gray-600 hover:text-gray-100 transition`}
                     >
-                      {sub}
+                      {model}
                     </button>
                   </li>
                 ))}
@@ -46,7 +57,7 @@ const Sidebar = ({
       </ul>
       <h2 className="text-xl font-semibold mt-6 mb-4 text-gray-100">Brands</h2>
       <ul>
-        {brands.map((brand) => (
+        {uniqueBrands.map((brand) => (
           <li key={brand}>
             <button
               onClick={() => setSelectedBrand(brand)}
