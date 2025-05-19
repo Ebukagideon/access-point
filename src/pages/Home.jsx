@@ -4,6 +4,7 @@ import Search from '../components/Search';
 import Sidebar from '../components/Sidebar';
 import { ProductContext } from '../context/ProductContext';
 import { CartContext } from '../context/CartContext';
+import bannerImage from '../assets/banner.jpeg';
 
 const Home = () => {
   const { products, searchProducts } = useContext(ProductContext);
@@ -74,9 +75,9 @@ const Home = () => {
       {/* Banner Section */}
       <div className="mb-6 relative">
         <img
-          src="https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-          alt="Toyota, Lexus, Mercedes-Benz Cars Banner"
-          className="w-full h-64 object-cover rounded-lg shadow-md"
+          src={bannerImage}
+          alt="Banner"
+          className="w-full h-64 md:h-96 object- rounded-lg shadow-md"
         />
       </div>
 
