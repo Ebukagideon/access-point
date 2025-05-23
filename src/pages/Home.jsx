@@ -1,10 +1,14 @@
-// src/pages/Home.jsx
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Search from '../components/Search';
 import Sidebar from '../components/Sidebar';
 import { ProductContext } from '../context/ProductContext';
 import { CartContext } from '../context/CartContext';
 import bannerImage from '../assets/banner.jpeg';
+// Import your before-and-after images from the assets folder
+import BnF1 from '../assets/BnF1.jpeg';
+import BnF2 from '../assets/BnF2.jpeg';
+import BnF3 from '../assets/BnF3.jpeg';
+import BnF4 from '../assets/BnF4.jpeg';
 
 const Home = () => {
   const { products, searchProducts } = useContext(ProductContext);
@@ -16,31 +20,24 @@ const Home = () => {
   // State for carousel
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Placeholder slides for "before and after" images (replace with actual URLs)
+  // Slides array using imported images
   const slides = [
-    {
-      before: 'https://via.placeholder.com/300x200?text=Before+Car+Upgrade+1',
-      after: 'https://via.placeholder.com/300x200?text=After+Car+Upgrade+1',
-      caption: 'Car Upgrade - Exterior Enhancement',
-    },
-    {
-      before: 'https://via.placeholder.com/300x200?text=Before+Car+Upgrade+2',
-      after: 'https://via.placeholder.com/300x200?text=After+Car+Upgrade+2',
-      caption: 'Car Upgrade - Headlight Restoration',
-    },
-    {
-      before: 'https://via.placeholder.com/300x200?text=Before+Car+Upgrade+3',
-      after: 'https://via.placeholder.com/300x200?text=After+Car+Upgrade+3',
-      caption: 'Car Upgrade - Bumper Replacement',
-    },
+    { image: BnF1, caption: 'Car Upgrade - Exterior Enhancement' },
+    { image: BnF2, caption: 'Car Upgrade - Headlight Restoration' },
+    { image: BnF3, caption: 'Car Upgrade - Bumper Replacement' },
+    { image: BnF4, caption: 'Car Upgrade - Interior Detailing' },
   ];
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
+  // Auto-advance slides every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5000); // 5000ms = 5 seconds
+    return () => clearInterval(timer); // Cleanup on unmount
+  }, []);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
   };
 
   // Group products by brand and model
@@ -77,7 +74,7 @@ const Home = () => {
         <img
           src={bannerImage}
           alt="Banner"
-          className="w-full h-64 md:h-96 object- rounded-lg shadow-md"
+          className="w-full h-64 md:h-96 object-cover rounded-lg shadow-md"
         />
       </div>
 
@@ -91,33 +88,27 @@ const Home = () => {
         {/* Before and After Slideshow */}
         <div className="mt-6">
           <h3 className="text-xl font-medium text-gray-700 mb-4">Our Work: Before and After</h3>
-          <div className="relative max-w-3xl mx-auto">
-            <div className="flex justify-center items-center space-x-4">
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center">
               <img
-                src={slides[currentSlide].before}
-                alt="Before"
-                className="w-1/2 h-48 object-cover rounded-md"
-              />
-              <img
-                src={slides[currentSlide].after}
-                alt="After"
-                className="w-1/2 h-48 object-cover rounded-md"
+                src={slides[currentSlide].image}
+                alt="Before and After"
+                className="w-full h-auto max-h-64 sm:max-h-80 md:max-h-96 object-contain rounded-md transition-opacity duration-500"
               />
             </div>
-            <p className="text-gray-600 mt-2">{slides[currentSlide].caption}</p>
-            <div className="flex justify-center mt-4 space-x-4">
-              <button
-                onClick={prevSlide}
-                className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
-              >
-                Previous
-              </button>
-              <button
-                onClick={nextSlide}
-                className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
-              >
-                Next
-              </button>
+            <p className="text-gray-600 mt-2 text-sm sm:text-base">{slides[currentSlide].caption}</p>
+            {/* Slide Indicators */}
+            <div className="flex justify-center mt-4 space-x-1 sm:space-x-2">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                    index === currentSlide ? 'bg-gray-700 scale-125' : 'bg-gray-400'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>

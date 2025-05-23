@@ -1,10 +1,12 @@
-// src/pages/Store.jsx
 import React, { useContext } from 'react';
 import { ProductContext } from '../context/ProductContext';
 import ProductCard from '../components/ProductCard';
+import Search from '../components/Search';
+
 
 const Store = () => {
-  const { products } = useContext(ProductContext);
+  
+  const { products, searchProducts } = useContext(ProductContext);
 
   // Group products by brand and model
   const groupedByBrand = products.reduce((acc, product) => {
@@ -31,6 +33,7 @@ const Store = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">Store</h2>
+      <Search onSearch={searchProducts} />
       {brands.length === 0 ? (
         <p className="text-center text-gray-600">No products available</p>
       ) : (
