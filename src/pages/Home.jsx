@@ -9,6 +9,7 @@ import BnF1 from '../assets/BnF1.jpeg';
 import BnF2 from '../assets/BnF2.jpeg';
 import BnF3 from '../assets/BnF3.jpeg';
 import BnF4 from '../assets/BnF4.jpeg';
+import BnF5 from '../assets/BnF5.jpeg';
 
 const Home = () => {
   const { products, searchProducts } = useContext(ProductContext);
@@ -26,6 +27,7 @@ const Home = () => {
     { image: BnF2, caption: 'Car Upgrade - Headlight Restoration' },
     { image: BnF3, caption: 'Car Upgrade - Bumper Replacement' },
     { image: BnF4, caption: 'Car Upgrade - Interior Detailing' },
+    { image: BnF5, caption: 'Car Upgrade - Interior Detailing' },
   ];
 
   // Auto-advance slides every 5 seconds
