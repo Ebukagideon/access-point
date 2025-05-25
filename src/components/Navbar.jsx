@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -14,6 +15,10 @@ const Navbar = () => {
                 ? 'text-gray-300 font-semibold'
                 : 'text-gray-200 hover:text-gray-300 transition'
             }
+            onClick={(e) => {
+              console.log('Navigating to /');
+              if (e.defaultPrevented) console.log('Home link event prevented');
+            }}
           >
             Home
           </NavLink>
@@ -24,6 +29,10 @@ const Navbar = () => {
                 ? 'text-gray-300 font-semibold'
                 : 'text-gray-200 hover:text-gray-300 transition'
             }
+            onClick={(e) => {
+              console.log('Navigating to /store');
+              if (e.defaultPrevented) console.log('Store link event prevented');
+            }}
           >
             Store
           </NavLink>
@@ -34,6 +43,10 @@ const Navbar = () => {
                 ? 'text-gray-300 font-semibold'
                 : 'text-gray-200 hover:text-gray-300 transition'
             }
+            onClick={(e) => {
+              console.log('Navigating to /cart');
+              if (e.defaultPrevented) console.log('Cart link event prevented');
+            }}
           >
             Cart
           </NavLink>

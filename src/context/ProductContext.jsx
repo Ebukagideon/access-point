@@ -5,14 +5,14 @@ export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const productTypes = [
-    { name: 'Bonnet', category: 'Body Parts', subcategory: 'Exterior', price: 120.00 },
-    { name: 'Fender', category: 'Body Parts', subcategory: 'Exterior', price: 80.00 },
-    { name: 'Bumper', category: 'Body Parts', subcategory: 'Exterior', price: 100.00 },
-    { name: 'Headlight', category: 'Lighting', subcategory: 'Front', price: 90.00 },
-    { name: 'Front Grill', category: 'Body Parts', subcategory: 'Exterior', price: 70.00 },
-    { name: 'Rear Light', category: 'Lighting', subcategory: 'Rear', price: 85.00 },
-    { name: 'Foglamp', category: 'Lighting', subcategory: 'Front', price: 60.00 },
-    { name: 'Sand Protector', category: 'Protection', subcategory: 'Exterior', price: 50.00 },
+    { name: 'Bonnet', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Fender', category: 'Body Parts', subcategory: 'Exterior',},
+    { name: 'Bumper', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Headlight', category: 'Lighting', subcategory: 'Front', },
+    { name: 'Front Grill', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Rear Light', category: 'Lighting', subcategory: 'Rear', },
+    { name: 'Foglamp', category: 'Lighting', subcategory: 'Front', },
+    { name: 'Sand Protector', category: 'Protection', subcategory: 'Exterior', },
   ];
 
   const brandsAndModels = [
