@@ -1,10 +1,30 @@
 // src/pages/Cart.jsx
 import React, { useContext } from 'react';
-import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
+
+  // Function to generate WhatsApp message with cart items
+  const generateWhatsAppMessage = () => {
+    if (cartItems.length === 0) return 'Hello, I would like to discuss my cart, but it is currently empty.';
+
+    const itemList = cartItems
+      .map((item, index) => 
+        `${index + 1}. ${item.name} (${item.brand}, ${item.model}, ${item.year}, ${item.category} - ${item.subcategory}) - Quantity: ${item.quantity}`
+      )
+      .join('\n');
+    return `Hello, I would like to discuss my cart:\n${itemList}\nPlease provide pricing and further details.`;
+  };
+
+  // Function to handle WhatsApp redirect
+  const handleContinueOnWhatsApp = () => {
+    const message = encodeURIComponent(generateWhatsAppMessage());
+    const phoneNumber = '+2348147999973'; // Replace with your customer care WhatsApp number (e.g., '2341234567890')
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -65,18 +85,18 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className="mt-6 flex justify-between">
+          <div className="mt-6 flex justify-between items-center space-x-8">
             <Link
-              to="/products"
+              to="/store"
               className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
             >
               Continue Shopping
             </Link>
             <button
-              className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
-              onClick={() => alert('Proceed to negotiate prices with our team!')}
+              onClick={handleContinueOnWhatsApp}
+              className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
             >
-              Proceed to Checkout
+              Continue on WhatsApp
             </button>
           </div>
         </div>
