@@ -4,27 +4,58 @@ import React, { createContext, useState } from 'react';
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([
-    // Toyota products
-    { id: 1, name: 'Bonnet', category: 'Body Parts', subcategory: 'Exterior', brand: 'Toyota', model: 'Camry', price: 120.00, image: 'https://via.placeholder.com/150' },
-    { id: 2, name: 'Fender', category: 'Body Parts', subcategory: 'Exterior', brand: 'Toyota', model: 'Camry', price: 80.00, image: 'https://via.placeholder.com/150' },
-    { id: 3, name: 'Bumper', category: 'Body Parts', subcategory: 'Exterior', brand: 'Toyota', model: 'Camry', price: 100.00, image: 'https://via.placeholder.com/150' },
-    { id: 4, name: 'Headlight', category: 'Lighting', subcategory: 'Front', brand: 'Toyota', model: 'Corolla', price: 90.00, image: 'https://via.placeholder.com/150' },
-    { id: 5, name: 'Front Grill', category: 'Body Parts', subcategory: 'Exterior', brand: 'Toyota', model: 'Corolla', price: 70.00, image: 'https://via.placeholder.com/150' },
-    { id: 6, name: 'Rear Light', category: 'Lighting', subcategory: 'Rear', brand: 'Toyota', model: 'Highlander', price: 85.00, image: 'https://via.placeholder.com/150' },
-    { id: 7, name: 'Foglamp', category: 'Lighting', subcategory: 'Front', brand: 'Toyota', model: 'Highlander', price: 60.00, image: 'https://via.placeholder.com/150' },
-    { id: 8, name: 'Sand Protector', category: 'Protection', subcategory: 'Exterior', brand: 'Toyota', model: 'Highlander', price: 50.00, image: 'https://via.placeholder.com/150' },
-    // Lexus products
-    { id: 9, name: 'Bonnet', category: 'Body Parts', subcategory: 'Exterior', brand: 'Lexus', model: 'IS 350', price: 150.00, image: 'https://via.placeholder.com/150' },
-    { id: 10, name: 'Fender', category: 'Body Parts', subcategory: 'Exterior', brand: 'Lexus', model: 'IS 350', price: 110.00, image: 'https://via.placeholder.com/150' },
-    { id: 11, name: 'Headlight', category: 'Lighting', subcategory: 'Front', brand: 'Lexus', model: 'IS 350', price: 130.00, image: 'https://via.placeholder.com/150' },
-    // Mercedes products
-    { id: 12, name: 'Bumper', category: 'Body Parts', subcategory: 'Exterior', brand: 'Mercedes', model: 'C-Class', price: 140.00, image: 'https://via.placeholder.com/150' },
-    { id: 13, name: 'Front Grill', category: 'Body Parts', subcategory: 'Exterior', brand: 'Mercedes', model: 'C-Class', price: 120.00, image: 'https://via.placeholder.com/150' },
-    { id: 14, name: 'Foglamp', category: 'Lighting', subcategory: 'Front', brand: 'Mercedes', model: 'C-Class', price: 90.00, image: 'https://via.placeholder.com/150' },
-  ]);
+  const productTypes = [
+    { name: 'Bonnet', category: 'Body Parts', subcategory: 'Exterior', price: 120.00 },
+    { name: 'Fender', category: 'Body Parts', subcategory: 'Exterior', price: 80.00 },
+    { name: 'Bumper', category: 'Body Parts', subcategory: 'Exterior', price: 100.00 },
+    { name: 'Headlight', category: 'Lighting', subcategory: 'Front', price: 90.00 },
+    { name: 'Front Grill', category: 'Body Parts', subcategory: 'Exterior', price: 70.00 },
+    { name: 'Rear Light', category: 'Lighting', subcategory: 'Rear', price: 85.00 },
+    { name: 'Foglamp', category: 'Lighting', subcategory: 'Front', price: 60.00 },
+    { name: 'Sand Protector', category: 'Protection', subcategory: 'Exterior', price: 50.00 },
+  ];
 
-  const [originalProducts] = useState(products); // Store original products to reset after search
+  const brandsAndModels = [
+    { brand: 'Toyota', models: [
+        { name: 'Camry', years: [2008, 2010, 2012, 2014, 2016, 2018] },
+        { name: 'Corolla', years: [2010, 2012, 2014, 2016, 2018, 2020] },
+        { name: 'Highlander', years: [2010, 2012, 2014, 2016, 2018, 2020] },
+      ]
+    },
+    { brand: 'Lexus', models: [
+        { name: 'IS 350', years: [2014, 2016, 2018, 2020] },
+      ]
+    },
+    { brand: 'Mercedes', models: [
+        { name: 'C-Class', years: [2012, 2014, 2016, 2018, 2020] },
+      ]
+    },
+  ];
+
+  // Generate products: each product type available for every brand, model, and year
+  let id = 1;
+  const products = [];
+  brandsAndModels.forEach(({ brand, models }) => {
+    models.forEach(({ name: model, years }) => {
+      years.forEach((year) => {
+        productTypes.forEach((productType) => {
+          products.push({
+            id: id++,
+            name: productType.name,
+            category: productType.category,
+            subcategory: productType.subcategory,
+            brand,
+            model,
+            year,
+            price: productType.price,
+          });
+        });
+      });
+    });
+  });
+
+  const [stateProducts, setProducts] = useState(products);
+  const [originalProducts] = useState(products);
 
   const searchProducts = (query) => {
     if (!query) {
@@ -42,7 +73,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ products, searchProducts }}>
+    <ProductContext.Provider value={{ products: stateProducts, searchProducts }}>
       {children}
     </ProductContext.Provider>
   );

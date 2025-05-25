@@ -54,8 +54,8 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/products" element={<Store />} />
-              <Route path="/products/:id" element={<Product />} />
+              <Route path="/store" element={<Store />} />
+               
               <Route path="/cart" element={<Cart />} />
             </Routes>
             <Footer />

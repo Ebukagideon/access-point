@@ -18,7 +18,7 @@ const Navbar = () => {
             Home
           </NavLink>
           <NavLink
-            to="/products"
+            to="/store"
             className={({ isActive }) =>
               isActive
                 ? 'text-gray-300 font-semibold'
