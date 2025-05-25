@@ -114,8 +114,17 @@ const Home = () => {
     setCurrentSlide(index);
   };
 
-  const goToSlideForSample = (sampleIndex, newIndex) => {
-    setSlideIndices((prev) => ({ ...prev, [sampleIndex]: newIndex }));
+  const goToSlideForSample = (sampleIndex, direction) => {
+    setSlideIndices((prev) => {
+      const currentIndex = prev[sampleIndex] || 0;
+      let newIndex;
+      if (direction === 'next') {
+        newIndex = currentIndex === 2 ? 0 : currentIndex + 1; // Cycle to first image if at the last one
+      } else {
+        newIndex = currentIndex === 0 ? 2 : currentIndex - 1; // Cycle to last image if at the first one
+      }
+      return { ...prev, [sampleIndex]: newIndex };
+    });
   };
 
   // Define image mappings following the pattern
@@ -195,6 +204,28 @@ const Home = () => {
                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:scale-105"
               >
                 <div className="relative h-40 sm:h-48 flex items-center justify-center">
+                  {/* Left Arrow */}
+                  <button
+                    onClick={() => goToSlideForSample(index, 'prev')}
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-2 rounded-full hover:bg-gray-700 transition-opacity duration-300 opacity-75 hover:opacity-100"
+                    aria-label={`Previous image for ${product.name}`}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+
                   {/* 3-image slider for each sample */}
                   <img
                     src={imageUrls[product.id] ? imageUrls[product.id][0] : 'https://via.placeholder.com/300x300'}
@@ -214,19 +245,28 @@ const Home = () => {
                     className="max-w-full max-h-full object-contain rounded-md transition-opacity duration-500"
                     style={{ display: slideIndices[index] === 2 ? 'block' : 'none' }}
                   />
-                  {/* Slider navigation dots */}
-                  <div className="flex justify-center mt-2 space-x-1">
-                    {[0, 1, 2].map((slideIndex) => (
-                      <button
-                        key={slideIndex}
-                        onClick={() => goToSlideForSample(index, slideIndex)}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                          slideIndices[index] === slideIndex ? 'bg-gray-700 scale-125' : 'bg-gray-400'
-                        }`}
-                        aria-label={`Go to slide ${slideIndex + 1} for ${product.name}`}
+
+                  {/* Right Arrow */}
+                  <button
+                    onClick={() => goToSlideForSample(index, 'next')}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-2 rounded-full hover:bg-gray-700 transition-opacity duration-300 opacity-75 hover:opacity-100"
+                    aria-label={`Next image for ${product.name}`}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
                       />
-                    ))}
-                  </div>
+                    </svg>
+                  </button>
                 </div>
                 <h3 className="text-base sm:text-lg font-semibold text-gray-800">{product.name}</h3>
                 <p className="text-gray-600 text-sm sm:text-base">
@@ -237,6 +277,7 @@ const Home = () => {
                   className="mt-4 w-full bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition block text-center text-sm sm:text-base"
                   onClick={(e) => {
                     console.log('Navigating to /store');
+                    window.scrollTo(0, 0); // Scroll to top on navigation
                     if (e.defaultPrevented) console.log('Event prevented');
                   }}
                 >
@@ -252,6 +293,7 @@ const Home = () => {
             className="inline-block bg-gray-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-md hover:bg-gray-700 transition text-sm sm:text-base"
             onClick={(e) => {
               console.log('Navigating to /store');
+              window.scrollTo(0, 0); // Scroll to top on navigation
               if (e.defaultPrevented) console.log('Event prevented');
             }}
           >
