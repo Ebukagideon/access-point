@@ -2,7 +2,10 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
-import bannerImage from '../assets/banner.jpeg';
+// Import banner images from assets
+import banner1 from '../assets/banner1.jpeg';
+import banner2 from '../assets/banner2.jpeg';
+import banner3 from '../assets/banner3.jpeg';
 // Import your before-and-after images from the assets folder
 import BnF1 from '../assets/BnF1.jpeg';
 import BnF2 from '../assets/BnF2.jpeg';
@@ -72,10 +75,10 @@ const Home = () => {
     );
   }, [sampleProducts]);
 
-  // Auto-advance slides every 5 seconds
+  // Auto-advance banner slides every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+      setCurrentSlide((prev) => (prev + 1) % 3); // Cycle through 3 slides
     }, 5000); // 5000ms = 5 seconds
     return () => clearInterval(timer); // Cleanup on unmount
   }, []);
@@ -145,14 +148,56 @@ const Home = () => {
 
   return (
     <div className="p-4 sm:p-6 bg-gray-100 min-h-screen">
-      {/* Hero Section */}
-      <div className="mb-6 relative">
-        <img
-          src={bannerImage}
-          alt="Banner"
-          className="w-full h-48 sm:h-64 md:h-96 object-cover rounded-lg shadow-md"
-          onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x400'; }}
-        />
+      {/* 3-Slide Banner */}
+      <div className="mb-6 relative w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-md">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {sampleProducts.slice(0, 3).map((product, index) => (
+            <div key={index} className="w-full flex-shrink-0">
+              <img
+                src={index === 0 ? banner1 : index === 1 ? banner2 : banner3}
+                alt={`${product.name} banner`}
+                className="w-full h-48 sm:h-64 md:h-80 object-cover"
+                onError={(e) => { e.target.src = 'https://via.placeholder.com/800x300'; }}
+              />
+              {/* <div className="absolute bottom-4 left-4 text-white bg-black bg-opacity-50 p-2 rounded">
+                <h2 className="text-xl sm:text-2xl font-bold">{product.name}</h2>
+                <p className="text-sm sm:text-base">{product.category} - {product.subcategory}</p>
+                <Link
+                  to={`/product/${product.id}`}
+                  className="mt-2 inline-block bg-gray-600 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-md hover:bg-gray-700 transition text-sm"
+                >
+                  View Product
+                </Link>
+              </div> */}
+            </div>
+          ))}
+        </div>
+        {/* Navigation Dots */}
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full ${currentSlide === index ? 'bg-gray-700' : 'bg-gray-400'} hover:bg-gray-500 transition`}
+            ></button>
+          ))}
+        </div>
+        {/* Navigation Arrows */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + 3) % 3)}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
+        >
+          &lt;
+        </button>
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % 3)}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
+        >
+          &gt;
+        </button>
       </div>
 
       {/* Business Details and Slideshow Section */}
