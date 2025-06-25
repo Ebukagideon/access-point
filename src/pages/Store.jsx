@@ -139,7 +139,7 @@ const Store = () => {
       {/* Enquiry Button */}
       <div className="fixed bottom-6 right-6">
         <a
-          href="https://wa.me/1234567890?text=I%20would%20like%20to%20make%20an%20enquiry%20about%20a%20car%20upgrade"
+          href="https://wa.me/+2348147999973"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 flex items-center space-x-2"

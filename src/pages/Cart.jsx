@@ -6,7 +6,7 @@ const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Function to generate WhatsApp message with cart items
+  // Function to generate WhatsApp message with cart items and total count
   const generateWhatsAppMessage = () => {
     if (cartItems.length === 0) return 'Hello, I would like to discuss my cart, but it is currently empty.';
 
@@ -15,7 +15,8 @@ const Cart = () => {
         `${index + 1}. ${item.name} (${item.brand}, ${item.model}, ${item.year}, ${item.category} - ${item.subcategory}) - Quantity: ${item.quantity}`
       )
       .join('\n');
-    return `Hello, I would like to discuss my cart:\n${itemList}\nPlease provide pricing and further details.`;
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    return `Hello, I would like to discuss my cart:\n${itemList}\nTotal Items: ${totalItems}\nPlease provide further details.`;
   };
 
   // Function to handle WhatsApp redirect
@@ -28,10 +29,11 @@ const Cart = () => {
     setTimeout(() => setIsLoading(false), 1000); // Simulate loading delay
   };
 
-  // Handle quantity updates with loading state
+  // Handle quantity updates with loading state and prevent negative quantities
   const handleUpdateQuantity = (itemId, newQuantity) => {
     setIsLoading(true);
-    updateQuantity(itemId, newQuantity);
+    const updatedQuantity = Math.max(1, newQuantity); // Ensure quantity doesn't go below 1
+    updateQuantity(itemId, updatedQuantity);
     setTimeout(() => setIsLoading(false), 500); // Simulate loading delay
   };
 
@@ -47,7 +49,7 @@ const Cart = () => {
       <header className="mb-6 text-center">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">Your Cart</h1>
         <p className="text-gray-600 mt-2 text-sm sm:text-base">
-          Review your selected spare parts. Prices are negotiable—contact us to discuss!
+          Review your selected spare parts. Contact us to discuss!
         </p>
       </header>
 
@@ -69,12 +71,7 @@ const Cart = () => {
                 key={item.id}
                 className="flex flex-col sm:flex-row items-center justify-between p-3 sm:p-4 border-b"
               >
-                <div className="flex-1 flex items-center space-x-4">
-                  <img
-                    src={item.image || 'https://via.placeholder.com/50'} // Use product image or placeholder
-                    alt={`${item.name} image`}
-                    className="w-12 h-12 object-cover rounded-md"
-                  />
+                <div className="flex-1">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
                     <p className="text-gray-600 text-sm">{item.brand}</p>
@@ -86,7 +83,7 @@ const Cart = () => {
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                      disabled={isLoading}
+                      disabled={isLoading || item.quantity <= 1}
                       className="bg-gray-300 text-gray-800 px-2 py-1 rounded hover:bg-gray-400 transition disabled:opacity-50"
                     >
                       -
@@ -111,7 +108,7 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className="mt-6 flex justify-between items-center space-x-8">
+          <div className="mt-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-8">
             <Link
               to="/store"
               className="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-gray-700 transition text-sm sm:text-base"

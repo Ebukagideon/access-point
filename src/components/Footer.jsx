@@ -55,7 +55,8 @@ const Footer = () => {
             href="https://maps.google.com/?q=26+Yoruba+Road+S/G+Kano"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-gray-100 hover:underline transition"
+            // className="text-gray-300 hover:text-gray-100 hover:underline transition"
+            className="inline-block bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 font-semibold"className="inline-block bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 font-semibold"
           >
             View on Map
           </a>
