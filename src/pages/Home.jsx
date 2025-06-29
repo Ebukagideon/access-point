@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
@@ -57,17 +58,8 @@ const Home = () => {
   // Memoize sampleProducts to prevent unnecessary recalculations
   const sampleProducts = useMemo(() => {
     const uniqueProductTypes = products && products.length > 0 ? [...new Set(products.map((product) => product.name.toLowerCase()))] : [];
-    // Add mock products for Upgrade Kits and Book a Section
-    const mockProducts = [
-      { id: 1, name: 'Bonnet', category: 'Exterior', subcategory: 'Hood', brand: 'Toyota' },
-      { id: 2, name: 'Bumper', category: 'Exterior', subcategory: 'Front', brand: 'Lexus' },
-      { id: 3, name: 'Headlight', category: 'Lighting', subcategory: 'Front', brand: 'Mercedes' },
-      { id: 4, name: 'Upgrade Kits', category: 'Accessories', subcategory: 'Performance', brand: 'Generic' },
-      { id: 5, name: 'Book a Section', category: 'Services', subcategory: 'Consultation', brand: 'Access-points' },
-    ];
-    const finalProducts = products.length > 0 ? products : mockProducts;
     return uniqueProductTypes.map((type) =>
-      finalProducts.find((product) => product.name.toLowerCase() === type)
+      products.find((product) => product.name.toLowerCase() === type)
     ).filter((product) => product !== undefined);
   }, [products]);
 
@@ -103,7 +95,7 @@ const Home = () => {
       const urls = {};
       for (const product of sampleProducts) {
         const name = product.name.toLowerCase().replace(' ', '');
-        urls[product.id] = imageMap[name] || ['https://via.placeholder.com/300x300', 'https://via.placeholder.com/300x300', 'https://via.placeholder.com/300x300'];
+        urls[product.id] = imageMap[name] || [ ];
       }
       if (isMounted) {
         setImageUrls(urls); // Only update state if component is mounted
@@ -148,9 +140,10 @@ const Home = () => {
     rearlight: [rearlight1, rearlight2, rearlight3],
     foglamp: [foglamp1, foglamp2, foglamp3],
     sandprotector: [sandprotect1, sandprotect2, sandprotect3],
-    // Placeholder for new features
-    'upgradekits': [sandprotect1, sandprotect2, sandprotect3], // Reuse sandprotect images as placeholder
-    'bookasection': [foglamp1, foglamp2, foglamp3], // Reuse foglamp images as placeholder
+    sidemirror: [headlight3, bonnet2, bonnet3],
+    doorhandle: [bumper1, bumper2, bumper3],
+    engineprotector: [sandprotect2, bonnet2, bonnet3],
+    upgradekit: [bonnet3, bumper1, fender1], 
   };
 
   if (loading) {
@@ -171,7 +164,6 @@ const Home = () => {
                 src={index === 0 ? banner1 : index === 1 ? banner2 : banner3}
                 alt={`${product.name} banner`}
                 className="w-full h-64 sm:h-80 md:h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
-                onError={(e) => { e.target.src = 'https://via.placeholder.com/800x600'; }}
               />
             </div>
           ))}
@@ -189,18 +181,18 @@ const Home = () => {
         </div>
 
         {/* Navigation Arrows */}
-        {/* <button
+        <button
           onClick={() => setCurrentSlide((prev) => (prev - 1 + 3) % 3)}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition-all duration-300"
         >
-          <
+          &lt;
         </button>
         <button
           onClick={() => setCurrentSlide((prev) => (prev + 1) % 3)}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition-all duration-300"
         >
-          >
-        </button> */}
+          &gt;
+        </button>
       </div>
 
       {/* Business Details and Slideshow Section */}
@@ -264,7 +256,6 @@ const Home = () => {
                       src={imageUrls[product.id] ? imageUrls[product.id][slideIndices[index]] : 'https://via.placeholder.com/300x300'}
                       alt={`${product.name} Image ${slideIndices[index] + 1}`}
                       className="max-w-full max-h-full object-contain rounded-md transition-opacity duration-300"
-                      onError={(e) => { e.target.src = 'https://via.placeholder.com/300x300'; }}
                     />
                     <button
                       onClick={() => goToSlideForSample(index, 'next')}

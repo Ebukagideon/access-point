@@ -13,6 +13,10 @@ export const ProductProvider = ({ children }) => {
     { name: 'Rear Light', category: 'Lighting', subcategory: 'Rear', },
     { name: 'Foglamp', category: 'Lighting', subcategory: 'Front', },
     { name: 'Sand Protector', category: 'Protection', subcategory: 'Exterior', },
+    { name: 'Side Mirror', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Door Handle', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Engine Protector', category: 'Body Parts', subcategory: 'Exterior', },
+    { name: 'Upgrade Kit', category: 'Body Parts', subcategory: 'Exterior', },
   ];
 
   const brandsAndModels = [
