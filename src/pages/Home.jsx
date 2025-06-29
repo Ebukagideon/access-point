@@ -237,16 +237,16 @@ const Home = () => {
           {sampleProducts.length === 0 ? (
             <p className="text-center text-gray-600 text-lg">No products available</p>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
               {sampleProducts.map((product, index) => (
                 <div
                   key={product.id}
-                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                  className="bg-white p-2 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
                 >
-                  <div className="relative h-48 sm:h-56 flex items-center justify-center overflow-hidden rounded-lg">
+                  <div className="relative h-48 sm:h-38 flex items-center justify-center overflow-hidden rounded-lg">
                     <button
                       onClick={() => goToSlideForSample(index, 'prev')}
-                      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-opacity duration-300 opacity-75 hover:opacity-100"
+                      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-1 rounded-full hover:bg-gray-700 transition-opacity duration-300 opacity-75 hover:opacity-100"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -266,11 +266,11 @@ const Home = () => {
                       </svg>
                     </button>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mt-4">{product.name}</h3>
-                  <p className="text-gray-600 text-base">{product.category} - {product.subcategory}</p>
+                  <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
+                  <p className="text-gray-600 text-base">{product.category} - <br/>{product.subcategory}</p>
                   <Link
                     to="/store"
-                    className="mt-4 inline-block bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-full hover:shadow-md transition-all duration-300"
+                    className="m-4 p-2 inline-block sm:text-xs bg-gray-600 hover:bg-gray-500 text-white rounded-lg hover:shadow-md transition-all duration-300"
                   >
                     Shop Now
                   </Link>
