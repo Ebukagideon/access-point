@@ -19,12 +19,18 @@ import bonnet3 from '../assets/bonnet3.jpeg';
 import bumper1 from '../assets/bumper1.jpeg';
 import bumper2 from '../assets/bumper2.jpeg';
 import bumper3 from '../assets/bumper3.jpeg';
+import engineprotector1 from '../assets/engineprotector1.jpeg';
+import engineprotector2 from '../assets/engineprotector2.jpeg';
+import engineprotector3 from '../assets/engineprotector3.jpeg';
 import fender1 from '../assets/fender1.jpeg';
 import fender2 from '../assets/fender2.jpeg';
 import fender3 from '../assets/fender3.jpeg';
 import headlight1 from '../assets/headlight1.jpeg';
 import headlight2 from '../assets/headlight2.jpeg';
 import headlight3 from '../assets/headlight3.jpeg';
+import handle1 from '../assets/handle1.jpeg';
+import handle2 from '../assets/handle2.jpeg';
+import handle3 from '../assets/handle3.jpeg';
 import frontgrill1 from '../assets/frontgrill1.jpeg';
 import frontgrill2 from '../assets/frontgrill2.jpeg';
 import frontgrill3 from '../assets/frontgrill3.jpeg';
@@ -34,6 +40,12 @@ import rearlight3 from '../assets/rearlight3.jpeg';
 import foglamp1 from '../assets/foglamp1.jpeg';
 import foglamp2 from '../assets/foglamp2.jpeg';
 import foglamp3 from '../assets/foglamp3.jpeg';
+import kit1 from '../assets/kit1.jpeg';
+import kit2 from '../assets/kit2.jpeg';
+import kit3 from '../assets/kit3.jpeg';
+import mirror1 from '../assets/mirror1.jpeg';
+import mirror2 from '../assets/mirror2.jpeg';
+import mirror3 from '../assets/mirror3.jpeg';
 import sandprotect1 from '../assets/sandprotect1.jpeg';
 import sandprotect2 from '../assets/sandprotect2.jpeg';
 import sandprotect3 from '../assets/sandprotect3.jpeg';
@@ -48,11 +60,11 @@ const Home = () => {
 
   // Slides array for Before and After Slideshow
   const slides = [
-    { image: BnF1, caption: 'Exterior Enhancement' },
-    { image: BnF2, caption: 'Headlight Restoration' },
-    { image: BnF3, caption: 'Bumper Replacement' },
-    { image: BnF4, caption: 'Interior Detailing' },
-    { image: BnF5, caption: 'Interior Detailing' },
+    { image: BnF1, caption: 'Lexus GX470 > GX460 2021' },
+    { image: BnF2, caption: 'Prado 2005 > Prado 2021' },
+    { image: BnF3, caption: 'Land Cruser 2008 >2003' },
+    { image: BnF4, caption: 'Hidhlander 2008 > 2013 VIPface' },
+    { image: BnF5, caption: 'Hilux 2008 > 2013' },
   ];
 
   // Memoize sampleProducts to prevent unnecessary recalculations
@@ -140,10 +152,10 @@ const Home = () => {
     rearlight: [rearlight1, rearlight2, rearlight3],
     foglamp: [foglamp1, foglamp2, foglamp3],
     sandprotector: [sandprotect1, sandprotect2, sandprotect3],
-    sidemirror: [headlight3, bonnet2, bonnet3],
-    doorhandle: [bumper1, bumper2, bumper3],
-    engineprotector: [sandprotect2, bonnet2, bonnet3],
-    upgradekit: [bonnet3, bumper1, fender1], 
+    sidemirror: [mirror1, mirror2, mirror3],
+    doorhandle: [handle1, handle2, handle3],
+    engineprotector: [engineprotector1, engineprotector2, engineprotector3],
+    upgradekit: [kit1, kit2, kit3], 
   };
 
   if (loading) {
@@ -205,7 +217,7 @@ const Home = () => {
 
           {/* Before and After Slideshow */}
           <div className="mt-8">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-4 text-center">Our Work: Before and After</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-4 text-center">Our Work: <br/>Before and After</h3>
             <div className="relative max-w-4xl mx-auto">
               <div className="overflow-hidden rounded-lg shadow-md">
                 <img
