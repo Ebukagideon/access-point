@@ -1,7 +1,7 @@
-// src/pages/Home.jsx
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
+import { useCart } from '../context/CartContext'; // Import useCart hook
 // Import banner images from assets
 import banner1 from '../assets/banner1.jpeg';
 import banner2 from '../assets/banner2.jpeg';
@@ -52,6 +52,7 @@ import sandprotect3 from '../assets/sandprotect3.jpeg';
 
 const Home = () => {
   const { products } = useContext(ProductContext) || { products: [] }; // Fallback to empty array
+  const { addToCart } = useCart(); // Access addToCart from CartContext
 
   // State for carousel
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -62,8 +63,8 @@ const Home = () => {
   const slides = [
     { image: BnF1, caption: 'Lexus GX470 > GX460 2021' },
     { image: BnF2, caption: 'Prado 2005 > Prado 2021' },
-    { image: BnF3, caption: 'Land Cruser 2008 >2003' },
-    { image: BnF4, caption: 'Hidhlander 2008 > 2013 VIPface' },
+    { image: BnF3, caption: 'Land Cruser 2008 > 2003' },
+    { image: BnF4, caption: 'Highlander 2008 > 2013 VIPface' },
     { image: BnF5, caption: 'Hilux 2008 > 2013' },
   ];
 
@@ -103,11 +104,11 @@ const Home = () => {
   useEffect(() => {
     let isMounted = true; // Flag to prevent state updates on unmount
 
-    const loadImages = async () => {
+    const loadImages = () => {
       const urls = {};
       for (const product of sampleProducts) {
         const name = product.name.toLowerCase().replace(' ', '');
-        urls[product.id] = imageMap[name] || [ ];
+        urls[product.id] = imageMap[name] || ['https://via.placeholder.com/300x300', 'https://via.placeholder.com/300x300', 'https://via.placeholder.com/300x300']; // Default to placeholder if no match
       }
       if (isMounted) {
         setImageUrls(urls); // Only update state if component is mounted
@@ -155,7 +156,7 @@ const Home = () => {
     sidemirror: [mirror1, mirror2, mirror3],
     doorhandle: [handle1, handle2, handle3],
     engineprotector: [engineprotector1, engineprotector2, engineprotector3],
-    upgradekit: [kit1, kit2, kit3], 
+    upgradekit: [kit1, kit2, kit3],
   };
 
   if (loading) {
@@ -193,18 +194,18 @@ const Home = () => {
         </div>
 
         {/* Navigation Arrows */}
-        <button
+        {/* <button
           onClick={() => setCurrentSlide((prev) => (prev - 1 + 3) % 3)}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition-all duration-300"
         >
-          &lt;
+          <
         </button>
         <button
           onClick={() => setCurrentSlide((prev) => (prev + 1) % 3)}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition-all duration-300"
         >
-          &gt;
-        </button>
+          >
+        </button> */}
       </div>
 
       {/* Business Details and Slideshow Section */}
@@ -282,6 +283,7 @@ const Home = () => {
                   <p className="text-gray-600 text-base">{product.category} - <br/>{product.subcategory}</p>
                   <Link
                     to="/store"
+                    onClick={() => addToCart(product)} // Add product to cart
                     className="m-4 p-2 inline-block sm:text-xs bg-gray-600 hover:bg-gray-500 text-white rounded-lg hover:shadow-md transition-all duration-300"
                   >
                     Shop Now
