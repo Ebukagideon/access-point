@@ -61,10 +61,10 @@ const Home = () => {
 
   // Slides array for Before and After Slideshow
   const slides = [
-    { image: BnF1, caption: 'Lexus GX470 > GX460 2021' },
-    { image: BnF2, caption: 'Prado 2005 > Prado 2021' },
-    { image: BnF3, caption: 'Land Cruser 2008 > 2003' },
-    { image: BnF4, caption: 'Highlander 2008 > 2013 VIPface' },
+    { image: BnF1, caption: 'Prado 2005 > Prado 2021' },
+    { image: BnF2, caption: 'Land Cruser 2008 > 2023' },
+    { image: BnF3, caption: 'Highlander 2008 > 2013 VIPface' },
+    { image: BnF4, caption: 'Land Cruser 2008 > 2003' },
     { image: BnF5, caption: 'Hilux 2008 > 2013' },
   ];
 
@@ -318,6 +318,18 @@ const Home = () => {
           </Link>
         </div>
       </section>
+      
+       {/* Enquiry Button */}
+       <div className="fixed bottom-6 right-6">
+        <a
+          href="https://wa.me/+2348147999973"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 flex items-center space-x-2"
+        >
+          Enquiry
+        </a>
+      </div>
     </div>
   );
 };
